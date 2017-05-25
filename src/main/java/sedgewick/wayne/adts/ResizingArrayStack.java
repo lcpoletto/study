@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * Created by poletto on 4/15/2017.
  */
-public class ResizingArrayStack<T> implements Iterable <T> {
+public class ResizingArrayStack<T> implements Iterable<T> {
 
     private T[] data;
     private int entries;
@@ -45,8 +45,8 @@ public class ResizingArrayStack<T> implements Iterable <T> {
     }
 
     /*
-         * PRIVATE METHODS
-         */
+     * PRIVATE METHODS
+     */
     private void resize(int max) {
         final T[] newData = (T[]) new Object[max];
         for (int i = 0; i < data.length; i++) {
