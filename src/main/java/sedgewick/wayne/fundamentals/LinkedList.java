@@ -1,11 +1,11 @@
-package sedgewick.wayne.adts;
+package sedgewick.wayne.fundamentals;
 
 /**
  * ADT Created to answer linked list exercises starting on 1.3.19.
  * <p>
  * Created by poletto on 5/24/2017.
  */
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable> {
 
     private Node first;
     private int entries;
@@ -34,13 +34,17 @@ public class LinkedList<T> {
             return null;
         }
         Node current = first;
-        Node prev = first;
+        Node previous = first;
         while (current.next != null) {
-            prev = current;
+            previous = current;
             current = current.next;
         }
-        // now current is the last element, thus we remove the link to it
-        prev.next = null;
+        // current is the last element on the list
+        if (current == first) {
+            first = null;
+        } else {
+            previous.next = null;
+        }
         entries--;
         return current.item;
     }
@@ -49,21 +53,25 @@ public class LinkedList<T> {
      * 1.3.20 Write a method delete() that takes an int argument k and deletes the kth element
      * in a linked list, if it exists.
      *
-     * @param index
+     * @param k
      * @return
      */
-    public T delete(final int index) {
-        if (index > entries) {
+    public T delete(final int k) {
+        if (k > entries) {
             return null;
         }
         Node current = first;
         Node previous = first;
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 0; i < k; i++) {
             previous = current;
             current = current.next;
         }
         // now current is pointing to the kth element, thus we can return it and remove the link
-        previous.next = current.next;
+        if (current == first) {
+            first = null;
+        } else {
+            previous.next = current.next;
+        }
         entries--;
         return current.item;
     }
@@ -85,6 +93,7 @@ public class LinkedList<T> {
             if (key.equals(current.item)) {
                 return true;
             }
+            current = current.next;
         }
 
         return false;
@@ -99,21 +108,67 @@ public class LinkedList<T> {
      * @return
      */
     public T removeAfter(Node n) {
-        if (isEmpty() || n == null) {
+        if (n == null || n.next == null) {
             return null;
         }
+        T result = n.next.item;
+        n.next = n.next.next;
+        return result;
+    }
+
+    /**
+     * 1.3.25 Write a method insertAfter() that takes two linked-list Node arguments and
+     * inserts the second after the first on its list (and does nothing if either argument is null).
+     *
+     * @param first
+     * @param second
+     */
+    public void insertAfter(Node first, Node second) {
+        if (first != null && second != null) {
+            second.next = first.next;
+            first.next = second;
+        }
+    }
+
+    /**
+     * 1.3.27 Write a method max() that takes a reference to the first node in a linked list as
+     * argument and returns the value of the maximum key in the list. Assume that all keys are
+     * positive integers, and return 0 if the list is empty.
+     *
+     * @return
+     */
+    public T iterativeMax() {
+        if (isEmpty()) {
+            return null;
+        }
+        T max = first.item;
         Node current = first;
-        while (current != null && !current.item.equals(n.item)) {
+        while (current != null) {
             current = current.next;
+            if (current.item.compareTo(max) > 0) {
+                max = current.item;
+            }
         }
-        // now we have current pointing to the correct element, we will remove the next one if available
-        if (current.next != null) {
-            final T result = current.next.item;
-            current.next = current.next.next;
-            entries--;
-            return result;
+        return max;
+    }
+
+    /**
+     * 1.3.28 Develop a recursive solution to the previous question.
+     *
+     * @return
+     */
+    public T recursiveMax() {
+        if (isEmpty()) {
+            return null;
         }
-        // element not found, returning null
-        return null;
+        return recursiveMax(first, first.item);
+    }
+
+    private T recursiveMax(Node n, T max) {
+        T curMax = n.item.compareTo(max) > 0 ? n.item : max;
+        if (n.next == null) {
+            return curMax;
+        }
+        return recursiveMax(n.next, curMax);
     }
 }
