@@ -44,7 +44,7 @@ public class BinaryMatrix {
         }
 
         for (Integer row: result) {
-            System.out.println("Row: " + (row + 1) + " size: " + highest);
+            System.out.println("Row: " + (row + 1) + " capacity: " + highest);
         }
     }
 

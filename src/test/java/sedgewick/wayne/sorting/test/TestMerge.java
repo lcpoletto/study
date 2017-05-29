@@ -1,4 +1,4 @@
-package sedgewick.wayne.fundamentals.test;
+package sedgewick.wayne.sorting.test;
 
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Assert;

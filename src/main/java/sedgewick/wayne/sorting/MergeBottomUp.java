@@ -9,7 +9,7 @@ public class MergeBottomUp<T extends Comparable<T>> extends Sorter<T> {
     public void sort(final T[] a) {
         final T[] aux = (T[]) new Comparable[a.length];
 
-        // we start with sub arrays of size 1, and we double the size every time
+        // we start with sub arrays of capacity 1, and we double the capacity every time
         for (int size = 1; size < a.length; size *= 2) {
             for (int start = 0; start + size < a.length; start += size + size) {
                 final int mid = start + size - 1;

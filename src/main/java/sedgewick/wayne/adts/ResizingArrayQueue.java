@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 /**
  * 1.3.14 Develop a class ResizingArrayQueueOfStrings that implements the queue
- * abstraction with a fixed-size array, and then extend your implementation to use array
- * resizing to remove the size restriction.
+ * abstraction with a fixed-capacity array, and then extend your implementation to use array
+ * resizing to remove the capacity restriction.
  * <p>
  * Created by poletto on 5/24/2017.
  */
